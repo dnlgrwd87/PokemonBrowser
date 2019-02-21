@@ -2,14 +2,18 @@
     <div class="app">
         <navbar class="navigation"/>
         <router-view class="router-view container"/>
-        <back-to-top-button class="is-hidden-tablet" bottom="50px" right="50px" visibleoffset="500" visibleoffsetbottom="250"/>
+        <back-to-top class="is-hidden-tablet" bottom="50px" right="50px" visibleoffset="500" visibleoffsetbottom="250">
+            <button type="button" class="btn btn-info btn-to-top">
+                <i class="fa fa-chevron-up"></i>
+            </button>
+        </back-to-top>
     </div>
 </template>
 
 <script>
 import Navbar from '@/components/Layout/Navbar';
 import Banner from '@/components/Layout/Banner';
-import BackToTopButton from '@/components/Reusable/BackToTopButton.vue';
+import BackToTop from 'vue-backtotop';
 import db from '@/firebase/init';
 import { mapActions } from 'vuex';
 
@@ -17,7 +21,7 @@ export default {
     components: {
         Navbar,
         Banner,
-        BackToTopButton
+        BackToTop
     },
     methods: {
         ...mapActions(['storePokemonShort', 'storeMoves', 'storeTypes']),
@@ -107,6 +111,28 @@ export default {
 
 .bottom-margin {
     margin-bottom: 50px;
+}
+
+.btn-to-top {
+    position: relative;
+    cursor: pointer;
+    /* bottom: 30px; */
+    /* right: 30px; */
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    background: rgb(148, 151, 156);
+    border: 2px solid rgb(148, 151, 156);
+    box-shadow: 0px 0px 2px rgb(88, 87, 87);
+}
+
+.fa-chevron-up {
+    position: absolute;
+    font-size: 18px;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    color: white;
 }
 
 @media screen and (max-width: 950px) {
