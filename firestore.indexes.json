@@ -1,0 +1,270 @@
+{
+    "indexes": [
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "generation",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.fighting",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.ghost",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.ground",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.water",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.steel",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.rock",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.normal",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.dragon",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.psychic",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.poison",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.electric",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.fire",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.dark",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.grass",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.flying",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.ice",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.fairy",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        },
+        {
+            "collectionId": "pokemonShort",
+            "state": "READY",
+            "fields": [
+                {
+                    "fieldPath": "types.bug",
+                    "mode": "ASCENDING"
+                },
+                {
+                    "fieldPath": "id",
+                    "mode": "ASCENDING"
+                }
+            ]
+        }
+    ]
+}
