@@ -2,7 +2,7 @@
     <div class="app">
         <navbar class="navigation"/>
         <router-view class="router-view container"/>
-        <back-to-top class="is-hidden-tablet" bottom="50px" right="50px" visibleoffset="500" visibleoffsetbottom="250">
+        <back-to-top class="is-hidden-tablet" bottom="40px" right="40px" visibleoffset="500" visibleoffsetbottom="250">
             <button type="button" class="btn btn-info btn-to-top">
                 <i class="fa fa-chevron-up"></i>
             </button>
@@ -80,7 +80,7 @@ export default {
 
 .router-view {
     background: white;
-    box-shadow: 0 0 5px rgb(194, 194, 194);
+    box-shadow: 0 0 5px #c2c2c2;
     height: 100%;
     min-height: calc(100vh - 52px);
 }
@@ -91,7 +91,7 @@ export default {
 }
 
 .table {
-    background: rgb(251, 251, 251);
+    background: #fbfbfb;
 }
 
 .tabs.is-toggle a {
@@ -104,7 +104,7 @@ export default {
     color: white;
     margin-bottom: 20px;
     margin-top: 20px;
-    text-shadow: 0.5px 0.5px 2px rgb(44, 44, 44);
+    text-shadow: 0.5px 0.5px 2px #2c2c2c;
     font-weight: bold;
     font-size: 0.9rem;
 }
@@ -116,14 +116,12 @@ export default {
 .btn-to-top {
     position: relative;
     cursor: pointer;
-    /* bottom: 30px; */
-    /* right: 30px; */
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 100px;
-    background: rgb(148, 151, 156);
-    border: 2px solid rgb(148, 151, 156);
-    box-shadow: 0px 0px 2px rgb(88, 87, 87);
+    background: #a1a1a1;
+    border: 1px solid #94979c;
+    box-shadow: 0px 0px 2px #585757;
 }
 
 .fa-chevron-up {
