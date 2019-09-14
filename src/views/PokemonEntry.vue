@@ -221,7 +221,6 @@ export default {
     width: 80%;
     margin: 15px auto;
     position: relative;
-    height: 100%;
 }
 
 .entry-navigation ul {

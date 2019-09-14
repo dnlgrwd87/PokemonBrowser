@@ -83,6 +83,7 @@ export default {
     box-shadow: 0 0 5px #c2c2c2;
     height: 100%;
     min-height: calc(100vh - 52px);
+    padding-bottom: 10px;
 }
 
 .main-container {
