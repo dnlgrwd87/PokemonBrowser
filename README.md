@@ -1,4 +1,4 @@
-# pokemon-database
+# PokemonBrowser
 
 pokemonbrowser.com
 
