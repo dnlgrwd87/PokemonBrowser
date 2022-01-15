@@ -29,12 +29,6 @@ export default new Vuex.Store({
         },
         addPokemonToStore: (state, payload) => {
             state.storedPokemon[payload.info.name] = payload;
-            // if (Object.keys(state.storedPokemon).length > 20) {
-            //   for (let i = 0; i < 3; i++) {
-            //     let name = Object.keys(state.storedPokemon)[i];
-            //     delete state.storedPokemon[name];
-            //   }
-            // }
         },
         addMovePokemonToStore: (state, payload) => {
             const moves = Object.assign({}, state.storedMovePokemon[payload.name], payload.data);

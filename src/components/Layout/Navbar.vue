@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="navbar-brand">
                     <router-link to="/" class="navbar-item">
-                        <img src="https://upload.wikimedia.org/wikipedia/en/3/39/Pokeball.PNG">
+                        <img :src="require('../../assets/pokeball.png')">
                         <p class="brand-text is-info">Pokémon Browser</p>
                     </router-link>
                     <a v-if="$route.name != 'home'" role="button" class="navbar-burger" @click="isActive = !isActive" :class="{ 'is-active': isActive }">
@@ -19,7 +19,6 @@
 
                 <div class="navbar-menu has-background-dark" :class="{ 'is-active': isActive }">
                     <div class="navbar-end">
-                        <!-- <router-link to="/" class="navbar-item has-text-white">About</router-link> -->
                         <div class="search-bar navbar-item">
                             <ul>
                                 <div v-if="$route.name != 'home'" class="control has-icons-left">
