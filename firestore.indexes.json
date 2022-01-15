@@ -1,270 +1,271 @@
 {
-    "indexes": [
+  "indexes": [
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
         {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "generation",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
+          "fieldPath": "generation",
+          "order": "ASCENDING"
         },
         {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.fighting",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.ghost",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.ground",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.water",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.steel",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.rock",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.normal",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.dragon",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.psychic",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.poison",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.electric",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.fire",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.dark",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.grass",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.flying",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.ice",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.fairy",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
-        },
-        {
-            "collectionId": "pokemonShort",
-            "state": "READY",
-            "fields": [
-                {
-                    "fieldPath": "types.bug",
-                    "mode": "ASCENDING"
-                },
-                {
-                    "fieldPath": "id",
-                    "mode": "ASCENDING"
-                }
-            ]
+          "fieldPath": "id",
+          "order": "ASCENDING"
         }
-    ]
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.bug",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.dark",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.dragon",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.electric",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.fairy",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.fighting",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.fire",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.flying",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.ghost",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.grass",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.ground",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.ice",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.normal",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.poison",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.psychic",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.rock",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.steel",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "pokemonShort",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "types.water",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
 }
