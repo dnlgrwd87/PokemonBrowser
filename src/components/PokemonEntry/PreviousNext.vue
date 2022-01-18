@@ -1,6 +1,10 @@
 <template>
     <div class="is-mobile">
-        <a v-if="previous" @click="routeTo({ name: previous.name, type: 'pokemon' })" class="previous level-item">
+        <a
+            v-if="previous"
+            @click="routeTo({ name: previous.name, type: 'pokemon' })"
+            class="previous level-item"
+        >
             <span :style="{ color: typeColor }">
                 <i class="fa fa-angle-double-left"></i>
             </span>
@@ -9,8 +13,12 @@
                 {{ previous.displayName }}
             </span>
         </a>
-        
-        <a v-if="next" @click="routeTo({ name: next.name, type: 'pokemon' })" class="next level-item">
+
+        <a
+            v-if="next"
+            @click="routeTo({ name: next.name, type: 'pokemon' })"
+            class="next level-item"
+        >
             <span>
                 <span class="pokemon-id">#{{ next.id }}</span>
                 {{ next.displayName }}
@@ -24,12 +32,11 @@
 
 <script>
 import routeTo from '@/mixins/routeTo';
-import { mapState } from 'vuex';
 
 export default {
     name: 'PreviousNext',
     props: ['typeColor', 'previous', 'next'],
-    mixins: [routeTo]
+    mixins: [routeTo],
 };
 </script>
 

@@ -1,7 +1,13 @@
 <template>
     <div class="search-results">
         <div class="columns is-mobile is-multiline pokemon-container">
-            <pokemon-grid-item v-for="pokemon in pokemonList" :key="pokemon.id" :pokemon="pokemon" :showLearnLevel="showLearnLevel" class="column is-6-mobile is-4-tablet is-3-desktop is-one-fifth-widescreen"/>
+            <pokemon-grid-item
+                v-for="pokemon in pokemonList"
+                :key="pokemon.id"
+                :pokemon="pokemon"
+                :showLearnLevel="showLearnLevel"
+                class="column is-6-mobile is-4-tablet is-3-desktop is-one-fifth-widescreen"
+            />
         </div>
     </div>
 </template>
@@ -13,8 +19,8 @@ export default {
     name: 'PokemonListMobile',
     props: ['pokemonList', 'showLearnLevel'],
     components: {
-        PokemonGridItem
-    }
+        PokemonGridItem,
+    },
 };
 </script>
 

@@ -2,8 +2,8 @@
     <div class="pokemon-evolutions">
         <h2 class="has-text-centered">Evolution Chain</h2>
 
-        <evolutions-desktop :allStages="allStages"/>
-        <evolutions-mobile :allStages="allStages" class="is-hidden-tablet"/>
+        <evolutions-desktop :allStages="allStages" />
+        <evolutions-mobile :allStages="allStages" class="is-hidden-tablet" />
     </div>
 </template>
 
@@ -16,32 +16,26 @@ export default {
     props: ['evolutions'],
     components: {
         EvolutionsDesktop,
-        EvolutionsMobile
+        EvolutionsMobile,
     },
     computed: {
         stage1() {
-            return this.evolutions.filter(evo => {
-                return evo.stage == 1;
-            });
+            return this.evolutions.filter((evo) => evo.stage === 1);
         },
         stage2() {
-            return this.evolutions.filter(evo => {
-                return evo.stage == 2;
-            });
+            return this.evolutions.filter((evo) => evo.stage === 2);
         },
         stage3() {
-            return this.evolutions.filter(evo => {
-                return evo.stage == 3;
-            });
+            return this.evolutions.filter((evo) => evo.stage === 3);
         },
         allStages() {
-            let stages = [this.stage1, this.stage2];
+            const stages = [this.stage1, this.stage2];
             if (this.stage3.length > 0) {
                 stages.push(this.stage3);
             }
             return stages;
-        }
-    }
+        },
+    },
 };
 </script>
 

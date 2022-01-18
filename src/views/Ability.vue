@@ -1,6 +1,6 @@
 <template>
     <div>
-        <banner :typeColor="'lightgray'" :otherInfo="ability"/>
+        <banner :typeColor="'lightgray'" :otherInfo="ability" />
         <div class="main-container bottom-margin">
             <div class="ability-info">
                 <h1>
@@ -10,16 +10,32 @@
             </div>
 
             <div v-if="normalAbilityPokemon.length > 0">
-                <h2 class="header-container">Pokémon with {{ convertName(ability) }}</h2>
+                <h2 class="header-container">
+                    Pokémon with {{ convertName(ability) }}
+                </h2>
 
-                <pokemon-list :pokemonList="normalAbilityPokemon" class="is-hidden-mobile is-hidden-tablet-only"/>
-                <pokemon-list-mobile :pokemonList="normalAbilityPokemon" class="is-hidden-desktop"/>
+                <pokemon-list
+                    :pokemonList="normalAbilityPokemon"
+                    class="is-hidden-mobile is-hidden-tablet-only"
+                />
+                <pokemon-list-mobile
+                    :pokemonList="normalAbilityPokemon"
+                    class="is-hidden-desktop"
+                />
             </div>
 
             <div v-if="hiddenAbilityPokemon.length > 0">
-                <h2 class="header-container">{{ convertName(ability) }} as a hidden ability</h2>
-                <pokemon-list :pokemonList="hiddenAbilityPokemon" class="is-hidden-mobile is-hidden-tablet-only"/>
-                <pokemon-list-mobile :pokemonList="hiddenAbilityPokemon" class="is-hidden-desktop"/>
+                <h2 class="header-container">
+                    {{ convertName(ability) }} as a hidden ability
+                </h2>
+                <pokemon-list
+                    :pokemonList="hiddenAbilityPokemon"
+                    class="is-hidden-mobile is-hidden-tablet-only"
+                />
+                <pokemon-list-mobile
+                    :pokemonList="hiddenAbilityPokemon"
+                    class="is-hidden-desktop"
+                />
             </div>
         </div>
     </div>
@@ -41,48 +57,38 @@ export default {
     components: {
         Banner,
         PokemonList,
-        PokemonListMobile
+        PokemonListMobile,
     },
     data() {
         return {
             abilityInfo: '',
             normalAbilityPokemon: [],
             hiddenAbilityPokemon: [],
-            ability: this.$route.params.ability_name
+            ability: this.$route.params.ability_name,
         };
     },
     methods: {
-        ...mapActions(['storeAbility']),
-        getAbilityInfo() {
-            // if (this.storedAbilities[this.ability]) {
-            //   this.abilityInfo = this.storedAbilities[this.ability];
-            // } else {
-            db.collection('abilities')
+        async getAbilityInfo() {
+            const abilityInfo = await db
+                .collection('abilities')
                 .doc(this.ability)
-                .get()
-                .then(doc => {
-                    this.abilityInfo = doc.data().effect;
-                    this.storeAbility(doc.data());
-                });
-            // }
+                .get();
+
+            this.abilityInfo = abilityInfo.data().effect;
         },
         getAbilityPokemon() {
-            Object.values(this.storedPokemonShort).forEach(pokemon => {
-                if (pokemon.abilities.normal) {
-                    if (pokemon.abilities.normal.includes(this.ability)) {
-                        this.normalAbilityPokemon.push(pokemon);
-                    }
+            Object.values(this.storedPokemonShort).forEach((pokemon) => {
+                if (pokemon.abilities.normal.includes(this.ability)) {
+                    this.normalAbilityPokemon.push(pokemon);
                 }
-                if (pokemon.abilities.hidden) {
-                    if (pokemon.abilities.hidden.includes(this.ability)) {
-                        this.hiddenAbilityPokemon.push(pokemon);
-                    }
+                if (pokemon.abilities.hidden.includes(this.ability)) {
+                    this.hiddenAbilityPokemon.push(pokemon);
                 }
             });
-        }
+        },
     },
     computed: {
-        ...mapState(['storedPokemonShort', 'storedAbilities'])
+        ...mapState(['storedPokemonShort']),
     },
     created() {
         this.getAbilityInfo();
@@ -95,8 +101,8 @@ export default {
             this.hiddenAbilityPokemon = [];
             this.getAbilityInfo();
             this.getAbilityPokemon();
-        }
-    }
+        },
+    },
 };
 </script>
 

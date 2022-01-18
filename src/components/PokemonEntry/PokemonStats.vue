@@ -5,13 +5,22 @@
                 Stats:
                 <span class="tabs is-small is-toggle">
                     <ul>
-                        <li @click="changeStats('base')" :class="{'is-active': activeStat == 'base'}">
+                        <li
+                            @click="changeStats('base')"
+                            :class="{ 'is-active': activeStat === 'base' }"
+                        >
                             <a>Base</a>
                         </li>
-                        <li @click="changeStats('min')" :class="{'is-active': activeStat == 'min'}">
+                        <li
+                            @click="changeStats('min')"
+                            :class="{ 'is-active': activeStat === 'min' }"
+                        >
                             <a>Min</a>
                         </li>
-                        <li @click="changeStats('max')" :class="{'is-active': activeStat == 'max'}">
+                        <li
+                            @click="changeStats('max')"
+                            :class="{ 'is-active': activeStat === 'max' }"
+                        >
                             <a>Max</a>
                         </li>
                     </ul>
@@ -24,42 +33,91 @@
                         <td class="has-text-right">HP</td>
                         <td>{{ stats.hp }}</td>
                         <td>
-                            <div class="stat-bar" :style="{width: stats.hp   / highestStat * 170 + 'px', background: typeColor}"></div>
+                            <div
+                                class="stat-bar"
+                                :style="{
+                                    width:
+                                        (stats.hp / highestStat) * 170 + 'px',
+                                    background: typeColor,
+                                }"
+                            ></div>
                         </td>
                     </tr>
                     <tr>
                         <td class="has-text-right">Attack</td>
                         <td>{{ stats.attack }}</td>
                         <td>
-                            <div class="stat-bar" :style="{width: stats.attack  / highestStat * 170 + 'px', background: typeColor}"></div>
+                            <div
+                                class="stat-bar"
+                                :style="{
+                                    width:
+                                        (stats.attack / highestStat) * 170 +
+                                        'px',
+                                    background: typeColor,
+                                }"
+                            ></div>
                         </td>
                     </tr>
                     <tr>
                         <td class="has-text-right">Defense</td>
                         <td>{{ stats.defense }}</td>
                         <td>
-                            <div class="stat-bar" :style="{width: stats.defense  / highestStat * 170 + 'px', background: typeColor}"></div>
+                            <div
+                                class="stat-bar"
+                                :style="{
+                                    width:
+                                        (stats.defense / highestStat) * 170 +
+                                        'px',
+                                    background: typeColor,
+                                }"
+                            ></div>
                         </td>
                     </tr>
                     <tr>
                         <td class="has-text-right">Sp. Atk</td>
                         <td>{{ stats.specialAttack }}</td>
                         <td>
-                            <div class="stat-bar" :style="{width: stats.specialAttack  / highestStat * 170 + 'px', background: typeColor}"></div>
+                            <div
+                                class="stat-bar"
+                                :style="{
+                                    width:
+                                        (stats.specialAttack / highestStat) *
+                                            170 +
+                                        'px',
+                                    background: typeColor,
+                                }"
+                            ></div>
                         </td>
                     </tr>
                     <tr>
                         <td class="has-text-right">Sp. Def</td>
                         <td>{{ stats.specialDefense }}</td>
                         <td>
-                            <div class="stat-bar" :style="{width: stats.specialDefense  / highestStat * 170 + 'px', background: typeColor}"></div>
+                            <div
+                                class="stat-bar"
+                                :style="{
+                                    width:
+                                        (stats.specialDefense / highestStat) *
+                                            170 +
+                                        'px',
+                                    background: typeColor,
+                                }"
+                            ></div>
                         </td>
                     </tr>
                     <tr>
                         <td class="has-text-right">Speed</td>
                         <td>{{ stats.speed }}</td>
                         <td>
-                            <div class="stat-bar" :style="{width: stats.speed / highestStat * 170 + 'px', background: typeColor}"></div>
+                            <div
+                                class="stat-bar"
+                                :style="{
+                                    width:
+                                        (stats.speed / highestStat) * 170 +
+                                        'px',
+                                    background: typeColor,
+                                }"
+                            ></div>
                         </td>
                     </tr>
                     <tr>
@@ -92,9 +150,9 @@ export default {
                 defense: '',
                 specialAttack: '',
                 specialDefense: '',
-                speed: ''
+                speed: '',
             },
-            activeStat: 'base'
+            activeStat: 'base',
         };
     },
     methods: {
@@ -108,35 +166,21 @@ export default {
         },
         changeStats(stat) {
             this.activeStat = stat;
-            if (stat == 'base') this.stats = this.baseStats;
-            if (stat == 'min') this.stats = this.minStats;
-            if (stat == 'max') this.stats = this.maxStats;
-            if (this.info.name == 'shedinja') this.stats.hp = 1;
-        }
+            if (stat === 'base') this.stats = this.baseStats;
+            if (stat === 'min') this.stats = this.minStats;
+            if (stat === 'max') this.stats = this.maxStats;
+            if (this.info.name === 'shedinja') this.stats.hp = 1;
+        },
     },
     computed: {
         typeColor() {
             return this.getTypeColor(this.info.types[0]);
         },
         highestStat() {
-            return Math.max(
-                this.stats.hp,
-                this.stats.attack,
-                this.stats.defense,
-                this.stats.specialAttack,
-                this.stats.specialDefense,
-                this.stats.speed
-            );
+            return Math.max(...Object.values(this.stats));
         },
         statsTotal() {
-            return (
-                this.stats.hp +
-                this.stats.attack +
-                this.stats.defense +
-                this.stats.specialAttack +
-                this.stats.specialDefense +
-                this.stats.speed
-            );
+            return Object.values(this.stats).reduce((acc, val) => acc + val);
         },
         baseStats() {
             return {
@@ -145,7 +189,7 @@ export default {
                 defense: this.info.baseStats.defense,
                 specialAttack: this.info.baseStats.specialAttack,
                 specialDefense: this.info.baseStats.specialDefense,
-                speed: this.info.baseStats.speed
+                speed: this.info.baseStats.speed,
             };
         },
         minStats() {
@@ -157,7 +201,7 @@ export default {
                 specialDefense: this.minStat(
                     this.info.baseStats.specialDefense
                 ),
-                speed: this.minStat(this.info.baseStats.speed)
+                speed: this.minStat(this.info.baseStats.speed),
             };
         },
         maxStats() {
@@ -169,9 +213,9 @@ export default {
                 specialDefense: this.maxStat(
                     this.info.baseStats.specialDefense
                 ),
-                speed: this.maxStat(this.info.baseStats.speed)
+                speed: this.maxStat(this.info.baseStats.speed),
             };
-        }
+        },
     },
     created() {
         this.getStats();
@@ -180,8 +224,8 @@ export default {
         info() {
             this.getStats();
             this.activeStat = 'base';
-        }
-    }
+        },
+    },
 };
 </script>
 

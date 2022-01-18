@@ -1,26 +1,69 @@
 <template>
     <div v-if="pokemon.info">
-        <banner v-if="pokemon.info.types != undefined" :typeColor="typeColor" :info="pokemon.info"/>
+        <banner
+            v-if="pokemon.info.types != undefined"
+            :typeColor="typeColor"
+            :info="pokemon.info"
+        />
         <div class="entry-container">
-            <previous-next :typeColor="typeColor" :previous="pokemon.previous" :next="pokemon.next"/>
+            <previous-next
+                :typeColor="typeColor"
+                :previous="pokemon.previous"
+                :next="pokemon.next"
+            />
 
             <div v-if="pokemon.previous">
-                <img v-show="false" :src="require('../assets/pokemon-large/' + pokemon.previous.sprite)">
+                <img
+                    v-show="false"
+                    :src="
+                        require('../assets/pokemon-large/' +
+                            pokemon.previous.sprite)
+                    "
+                />
             </div>
 
             <div v-if="pokemon.next">
-                <img v-show="false" :src="require('../assets/pokemon-large/' + pokemon.next.sprite)">
+                <img
+                    v-show="false"
+                    :src="
+                        require('../assets/pokemon-large/' +
+                            pokemon.next.sprite)
+                    "
+                />
             </div>
 
             <div v-if="true" class="main-sprite">
-                <img :src="require('../assets/pokemon-large/' + pokemon.info.sprite)">
+                <img
+                    :src="
+                        require('../assets/pokemon-large/' +
+                            pokemon.info.sprite)
+                    "
+                />
             </div>
 
             <div class="tabs is-toggle is-centered">
                 <ul>
-                    <li v-for="form in pokemon.forms" :key="form.name" @click="$router.push({ name: 'pokemon', params: { pokemon_name: form.name }})" :class="{ 'is-active': form.name == pokemon.info.name }">
-                        <img v-show="false" :src="require('../assets/pokemon-large/' + form.sprite)">
-                        <a class="is-hidden-tablet">{{ displayName(form.displayName) }}</a>
+                    <li
+                        v-for="form in pokemon.forms"
+                        :key="form.name"
+                        @click="
+                            $router.push({
+                                name: 'pokemon',
+                                params: { pokemon_name: form.name },
+                            })
+                        "
+                        :class="{ 'is-active': form.name == pokemon.info.name }"
+                    >
+                        <img
+                            v-show="false"
+                            :src="
+                                require('../assets/pokemon-large/' +
+                                    form.sprite)
+                            "
+                        />
+                        <a class="is-hidden-tablet">{{
+                            convertAltDisplayName(form.displayName)
+                        }}</a>
                         <a class="is-hidden-mobile">{{ form.displayName }}</a>
                     </li>
                 </ul>
@@ -32,17 +75,40 @@
             </div>
 
             <div class="columns is-multiline">
-                <pokemon-pokedex-data :info="pokemon.info" class="pokedex-data entry-component column"/>
-                <pokemon-training :info="pokemon.info" class="training entry-component column"/>
+                <pokemon-pokedex-data
+                    :info="pokemon.info"
+                    class="pokedex-data entry-component column"
+                />
+                <pokemon-training
+                    :info="pokemon.info"
+                    class="training entry-component column"
+                />
             </div>
 
             <div class="columns is-multiline">
-                <pokemon-stats :info="pokemon.info" class="stats entry-component column" id="stats"/>
-                <pokemon-breeding :info="pokemon.info" class="breeding entry-component column"/>
+                <pokemon-stats
+                    :info="pokemon.info"
+                    class="stats entry-component column"
+                    id="stats"
+                />
+                <pokemon-breeding
+                    :info="pokemon.info"
+                    class="breeding entry-component column"
+                />
             </div>
 
-            <pokemon-evolutions v-if="pokemon.evolutions.length" class="entry-component" id="evolutions" :evolutions="pokemon.evolutions"/>
-            <pokemon-moves id="moves" class="bottom-margin" :typeColor="typeColor" :moves="pokemon.moves"/>
+            <pokemon-evolutions
+                v-if="pokemon.evolutions.length"
+                class="entry-component"
+                id="evolutions"
+                :evolutions="pokemon.evolutions"
+            />
+            <pokemon-moves
+                id="moves"
+                class="bottom-margin"
+                :typeColor="typeColor"
+                :moves="pokemon.moves"
+            />
         </div>
     </div>
 </template>
@@ -75,7 +141,7 @@ export default {
         PokemonBreeding,
         PokemonStats,
         PokemonEvolutions,
-        PokemonMoves
+        PokemonMoves,
     },
     data() {
         return {
@@ -85,8 +151,8 @@ export default {
                 evolutions: [],
                 forms: [],
                 previous: null,
-                next: null
-            }
+                next: null,
+            },
         };
     },
     methods: {
@@ -96,54 +162,46 @@ export default {
             if (!this.storedPokemon[name]) {
                 this.fetchPokemon();
             } else {
-                let currentPokemon = this.storedPokemon[name];
-                this.pokemon.info = currentPokemon.info;
-                this.pokemon.moves = currentPokemon.moves;
-                this.pokemon.evolutions = currentPokemon.evolutions;
-                this.pokemon.forms = currentPokemon.forms;
-                this.pokemon.previous = currentPokemon.previous;
-                this.pokemon.next = currentPokemon.next;
+                this.pokemon = this.storedPokemon[name];
             }
         },
         fetchPokemon() {
             const name = this.$route.params.pokemon_name;
-            const id = this.storedPokemonShort[name].id;
-            const altId =
-                this.storedPokemonShort[name].alternateId ||
-                this.storedPokemonShort[name].id;
-            const evoId = this.storedPokemonShort[name].evolutionId || 0;
+            const baseInfo = this.storedPokemonShort[name];
+            const id = baseInfo.id;
+            const altId = baseInfo.alternateId || baseInfo.id;
+            const evoId = baseInfo.evolutionId || 0;
 
-            let previousName = this.storedPokemonShort[name].previous;
-            let nextName = this.storedPokemonShort[name].next;
+            let previousName = baseInfo.previous;
+            let nextName = baseInfo.next;
 
-            let temp = {
+            // Temp is stored to store the current pokemon
+            // This way, when the page transitions there is no flicker
+            const temp = {
                 info: null,
                 moves: [],
                 evolutions: [],
                 forms: [],
                 previous: this.storedPokemonShort[previousName],
-                next: this.storedPokemonShort[nextName]
+                next: this.storedPokemonShort[nextName],
             };
 
             db.collection('pokemon')
                 .doc(id.toString())
                 .get()
-                .then(doc => {
+                .then((doc) => {
                     this.pokemon.info = doc.data();
-                    if (!this.pokemon.info.alternateForms) {
-                    }
                     temp.info = doc.data();
                     if (!this.pokemon.info.alternateForms) {
                         this.pokemon.forms = [];
                     }
-                    this.pokemon.previous = this.storedPokemonShort[
-                        previousName
-                    ];
+                    this.pokemon.previous =
+                        this.storedPokemonShort[previousName];
                     this.pokemon.next = this.storedPokemonShort[nextName];
                     db.collection('pokemonMoves')
                         .doc(id.toString())
                         .get()
-                        .then(doc => {
+                        .then((doc) => {
                             this.pokemon.moves = Object.values(doc.data());
                             temp.moves = Object.values(doc.data());
                             this.addPokemonToStore(temp);
@@ -151,11 +209,11 @@ export default {
                     db.collection('evolutions')
                         .doc(evoId.toString())
                         .get()
-                        .then(doc => {
+                        .then((doc) => {
                             if (doc.exists) {
-                                let evos = [];
-                                let values = Object.values(doc.data());
-                                values.forEach(value => {
+                                const evos = [];
+                                const values = Object.values(doc.data());
+                                values.forEach((value) => {
                                     if (value.stage == 1) {
                                         evos.unshift(value);
                                     } else {
@@ -169,33 +227,17 @@ export default {
                         });
                 });
 
-            if (this.storedPokemonShort[name].alternateForms) {
+            if (baseInfo.alternateForms) {
                 db.collection('alternateForms')
                     .doc(altId.toString())
                     .get()
-                    .then(doc => {
+                    .then((doc) => {
                         this.pokemon.forms = Object.values(doc.data());
                         temp.forms = Object.values(doc.data());
                         this.addPokemonToStore(temp);
                     });
             }
         },
-        displayName(name) {
-            if (
-                name.indexOf('Normal Forme') >= 0 ||
-                name.indexOf('Attack Forme') >= 0 ||
-                name.indexOf('Speed Forme') >= 0 ||
-                name.indexOf('Defense Forme') >= 0
-            ) {
-                return name.slice(0, name.indexOf(' '));
-            } else if (name.indexOf(' Rotom') >= 0) {
-                return name.slice(0, name.indexOf(' '));
-            } else if (name.indexOf(' Style') >= 0) {
-                return name.slice(0, name.indexOf(' '));
-            } else {
-                return name;
-            }
-        }
     },
     created() {
         this.loadPokemon();
@@ -206,13 +248,13 @@ export default {
             if (this.pokemon.info.types) {
                 return this.getTypeColor(this.pokemon.info.types[0]);
             }
-        }
+        },
     },
     watch: {
         '$route.params.pokemon_name'() {
             this.loadPokemon();
-        }
-    }
+        },
+    },
 };
 </script>
 

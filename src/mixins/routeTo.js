@@ -1,15 +1,17 @@
 export default {
-  methods: {
-    routeTo(routeObject) {
-      let name = "pokemon-" + routeObject.type;
-      let paramName = routeObject.type + "_name";
-      if (routeObject.type == "pokemon") {
-        name = "pokemon";
-      }
-      this.$router.push({
-        name: name,
-        params: { [paramName]: routeObject.name }
-      });
-    }
-  }
+    methods: {
+        routeTo(routeObject) {
+            const name =
+                routeObject.type === 'pokemon'
+                    ? 'pokemon'
+                    : `pokemon-${routeObject.type}`;
+
+            const paramName = `${routeObject.type}_name`;
+
+            this.$router.push({
+                name,
+                params: { [paramName]: routeObject.name },
+            });
+        },
+    },
 };

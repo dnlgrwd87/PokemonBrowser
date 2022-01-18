@@ -1,25 +1,35 @@
 <template>
     <div class="pokemon-moves">
-        <h1 class="has-text-centered">Moves learned by {{ convertName($route.params.pokemon_name, true) }}</h1>
+        <h1 class="has-text-centered">
+            Moves learned by {{ convertName($route.params.pokemon_name, true) }}
+        </h1>
 
-        <div v-if="levelUpMoves.length > 0">
-            <h2 class="header-container" :style="{ background: typeColor }">Level up</h2>
-            <moves-table :moves="levelUpMoves" :showLevel="true"/>
+        <div v-if="!!levelUpMoves.length">
+            <h2 class="header-container" :style="{ background: typeColor }">
+                Level up
+            </h2>
+            <moves-table :moves="levelUpMoves" :showLevel="true" />
         </div>
 
-        <div v-if="machineMoves.length > 0">
-            <h2 class="header-container" :style="{ background: typeColor }">Machine</h2>
-            <moves-table :moves="machineMoves"/>
+        <div v-if="!!machineMoves.length">
+            <h2 class="header-container" :style="{ background: typeColor }">
+                Machine
+            </h2>
+            <moves-table :moves="machineMoves" />
         </div>
 
-        <div v-if="tutorMoves.length > 0">
-            <h2 class="header-container" :style="{ background: typeColor }">Tutor</h2>
-            <moves-table :moves="tutorMoves"/>
+        <div v-if="!!tutorMoves.length">
+            <h2 class="header-container" :style="{ background: typeColor }">
+                Tutor
+            </h2>
+            <moves-table :moves="tutorMoves" />
         </div>
 
-        <div v-if="eggMoves.length > 0">
-            <h2 class="header-container" :style="{ background: typeColor }">Egg</h2>
-            <moves-table :moves="eggMoves"/>
+        <div v-if="!!eggMoves.length">
+            <h2 class="header-container" :style="{ background: typeColor }">
+                Egg
+            </h2>
+            <moves-table :moves="eggMoves" />
         </div>
     </div>
 </template>
@@ -34,38 +44,30 @@ export default {
     mixins: [typeColors, convertName],
     props: ['typeColor', 'moves'],
     components: {
-        MovesTable
+        MovesTable,
     },
     computed: {
         levelUpMoves() {
             return this.moves
-                .filter(move => {
-                    return move.learnMethod.includes('level-up');
-                })
+                .filter((move) => move.learnMethod.includes('level-up'))
                 .sort((a, b) => a.learnLevel - b.learnLevel);
         },
         machineMoves() {
             return this.moves
-                .filter(move => {
-                    return move.learnMethod.includes('machine');
-                })
+                .filter((move) => move.learnMethod.includes('machine'))
                 .sort((a, b) => a.name.localeCompare(b.name));
         },
         tutorMoves() {
             return this.moves
-                .filter(move => {
-                    return move.learnMethod.includes('tutor');
-                })
+                .filter((move) => move.learnMethod.includes('tutor'))
                 .sort((a, b) => a.name.localeCompare(b.name));
         },
         eggMoves() {
             return this.moves
-                .filter(move => {
-                    return move.learnMethod.includes('egg');
-                })
+                .filter((move) => move.learnMethod.includes('egg'))
                 .sort((a, b) => a.name.localeCompare(b.name));
-        }
-    }
+        },
+    },
 };
 </script>
 

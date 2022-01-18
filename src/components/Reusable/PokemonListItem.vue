@@ -1,70 +1,101 @@
 <template>
-    <div @click="routeTo({ name: pokemon.name, type: 'pokemon' })" class="pokemon-list-item columns is-vcentered has-text-weight-bold">
+    <div
+        @click="routeTo({ name: pokemon.name, type: 'pokemon' })"
+        class="pokemon-list-item columns is-vcentered has-text-weight-bold"
+    >
         <div class="column is-1">
-            <img :src="require('../../assets/pokemon-large/' + pokemon.sprite)" class="sprite">
+            <img
+                :src="require('../../assets/pokemon-large/' + pokemon.sprite)"
+                class="sprite"
+            />
         </div>
         <div class="name-id column has-text-left">
             <span>{{ storedPokemonShort[pokemon.name].displayName }}</span>
-            <br>
-            <span class="pokemon-id">#{{ pokemon.alternateId || pokemon.id }}</span>
+            <br />
+            <span class="pokemon-id">
+                #{{ pokemon.alternateId || pokemon.id }}
+            </span>
             <span v-if="showLearnLevel" class="learn-level">
-                <br>
+                <br />
                 <em>Lvl {{ pokemon.learnLevel }}</em>
             </span>
         </div>
         <div class="column types">
-            <div v-for="(type, index) in types" :key="index" @click.stop="routeTo( { name: type, type: 'type' })" :class="{ 'second-type': index == 1}">
-                <type-box :type="type"/>
+            <div
+                v-for="(type, index) in types"
+                :key="index"
+                @click.stop="routeTo({ name: type, type: 'type' })"
+                :class="{ 'second-type': index === 1 }"
+            >
+                <type-box :type="type" />
             </div>
         </div>
         <div class="column">
-            <span v-for="(ability, index) in pokemon.abilities.normal" @click.stop="routeTo({ name: ability.replace(' ', '-'), type: 'ability' })" :key="index" class="abilities">
+            <span
+                v-for="(ability, index) in pokemon.abilities.normal"
+                @click.stop="routeToAbility(ability)"
+                :key="index"
+                class="abilities"
+            >
                 {{ convertName(ability) }}
-                <br>
+                <br />
             </span>
         </div>
         <div class="column abilities">
-            <span v-if="pokemon.abilities.hidden" v-for="(ability, index) in pokemon.abilities.hidden" @click.stop="routeTo({ name: ability.replace(' ', '-'), type: 'ability' })" :key="index" class="abilities">
-                <em>{{ convertName(ability) }}</em>
-                <br>
+            <div v-if="pokemon.abilities.hidden">
+                <span
+                    v-for="(ability, index) in pokemon.abilities.hidden"
+                    @click.stop="routeToAbility(ability)"
+                    :key="index"
+                    class="abilities"
+                >
+                    <em>{{ convertName(ability) }}</em>
+                    <br />
+                </span>
+            </div>
+
+            <span
+                v-if="pokemon.abilities.hidden.length === 0"
+                class="unclickable"
+            >
+                &#8212;
             </span>
-            <span v-if="pokemon.abilities.hidden.length == 0" class="unclickable">&#8212;</span>
         </div>
         <div class="column is-4 stats">
             <div class="columns stat-cols">
                 <div class="column">
                     <span class="stat-name">HP</span>
-                    <br>
+                    <br />
                     <span>{{ pokemon.baseStats.hp }}</span>
                 </div>
                 <div class="column">
                     <span class="stat-name">Atk</span>
-                    <br>
+                    <br />
                     <span>{{ pokemon.baseStats.attack }}</span>
                 </div>
                 <div class="column">
                     <span class="stat-name">Def</span>
-                    <br>
+                    <br />
                     <span>{{ pokemon.baseStats.defense }}</span>
                 </div>
                 <div class="column">
                     <span class="stat-name">SpA</span>
-                    <br>
+                    <br />
                     <span>{{ pokemon.baseStats.specialAttack }}</span>
                 </div>
                 <div class="column">
                     <span class="stat-name">SpD</span>
-                    <br>
+                    <br />
                     <span>{{ pokemon.baseStats.specialDefense }}</span>
                 </div>
                 <div class="column">
                     <span class="stat-name">Spd</span>
-                    <br>
+                    <br />
                     <span>{{ pokemon.baseStats.speed }}</span>
                 </div>
                 <div class="column">
                     <span class="stat-name">BST</span>
-                    <br>
+                    <br />
                     <span>{{ pokemon.baseStats.total }}</span>
                 </div>
             </div>
@@ -84,17 +115,25 @@ export default {
     props: ['pokemon', 'showLearnLevel'],
     mixins: [typeColors, convertName, routeTo],
     components: {
-        TypeBox
+        TypeBox,
+    },
+    methods: {
+        routeToAbility(ability) {
+            this.routeTo({
+                name: ability.replace(' ', '-'),
+                type: 'ability',
+            });
+        },
     },
     computed: {
         ...mapState(['storedPokemonShort']),
         types() {
             return this.pokemon.types.all || this.pokemon.types;
-        }
-    }
+        },
+    },
 };
 </script>
- 
+
 <style scoped>
 .pokemon-list-item {
     padding: 0px 15px 0px 5px;

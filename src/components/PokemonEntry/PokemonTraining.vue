@@ -8,18 +8,18 @@
                     <p>EV Yield</p>
                 </td>
                 <td>
-                    <span v-for="(ev, index) in Object.keys(info.evYield)" :key="index">
-                        {{ info.evYield[ev] }} {{convertName(ev) }}
-                        <br v-if="index != Object.keys(info.evYield).length - 1">
+                    <span
+                        v-for="(ev, index) in Object.keys(info.evYield)"
+                        :key="index"
+                    >
+                        {{ info.evYield[ev] }} {{ convertName(ev) }}
+                        <br v-if="index != Object.keys(info.evYield).length - 1" />
                     </span>
                 </td>
             </tr>
             <tr>
                 <td>Catch Rate</td>
-                <td>
-                    {{ info.captureRate }}
-                    <span class="has-text-grey">{{ catchRatePercent }}</span>
-                </td>
+                <td>{{ info.captureRate }}</td>
             </tr>
             <tr>
                 <td>Base Happiness</td>
@@ -44,11 +44,6 @@ export default {
     name: 'PokemonTraining',
     props: ['info'],
     mixins: [convertName],
-    computed: {
-        catchRatePercent() {
-            // TODO - Figure this out
-        }
-    }
 };
 </script>
 

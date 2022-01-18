@@ -5,12 +5,12 @@
                 <div class="control">
                     <div class="tabs is-toggle is-centered">
                         <ul>
-                            <li :class="{'is-active': selected == 'pokemon'}">
+                            <li :class="{ 'is-active': selected === 'pokemon' }">
                                 <a @click="selected = 'pokemon'">
                                     <span>Pokemon</span>
                                 </a>
                             </li>
-                            <li :class="{'is-active': selected == 'moves'}">
+                            <li :class="{ 'is-active': selected === 'moves' }">
                                 <a @click="selected = 'moves'">
                                     <span>Moves</span>
                                 </a>
@@ -18,26 +18,51 @@
                         </ul>
                     </div>
                     <div class="search-bar">
-                        <input @keyup.enter="$event.target.blur()" class="input" type="text" placeholder="Search" :value="searchInput" @input="searchInput = $event.target.value">
-                        <span v-if="searchInput.length" @click="searchInput = ''" class="clear-input">
+                        <input
+                            @input="searchInput = $event.target.value"
+                            @keyup.enter="$event.target.blur()"
+                            :value="searchInput"
+                            class="input"
+                            type="text"
+                            placeholder="Search"
+                        />
+                        <span
+                            v-if="searchInput.length"
+                            @click="searchInput = ''"
+                            class="clear-input"
+                        >
                             <i class="fas fa-times"></i>
                         </span>
                     </div>
                 </div>
             </div>
 
-            <div v-show="searchInput.length == 0" class="inputEmpty">
-                <h2 class="has-text-centered is-size-4 is-size-6-mobile">Search for Pokémon or moves</h2>
-                <img :src="require('../assets/pokeball.png')" class="pokeball-img">
+            <div v-show="searchInput.length === 0" class="inputEmpty">
+                <h2 class="has-text-centered is-size-4 is-size-6-mobile">
+                    Search for Pokémon or moves
+                </h2>
+                <img
+                    :src="require('../assets/pokeball.png')"
+                    class="pokeball-img"
+                />
             </div>
 
             <div v-if="searchInput.length > 0">
-                <div class="bottom-margin" v-show="selected == 'pokemon'">
-                    <pokemon-list :pokemonList="orderedPokemon" class="is-hidden-mobile is-hidden-tablet-only"/>
-                    <pokemon-list-mobile :pokemonList="orderedPokemon" class="is-hidden-desktop"/>
+                <div class="bottom-margin" v-show="selected === 'pokemon'">
+                    <pokemon-list
+                        :pokemonList="orderedPokemon"
+                        class="is-hidden-mobile is-hidden-tablet-only"
+                    />
+                    <pokemon-list-mobile
+                        :pokemonList="orderedPokemon"
+                        class="is-hidden-desktop"
+                    />
                 </div>
-                <div class="bottom-margin" v-show="selected == 'moves' && searchedMoves.length > 0">
-                    <moves-table :moves="searchedMoves"/>
+                <div
+                    class="bottom-margin"
+                    v-show="selected === 'moves' && searchedMoves.length > 0"
+                >
+                    <moves-table :moves="searchedMoves" />
                 </div>
             </div>
         </div>
@@ -57,30 +82,35 @@ export default {
     components: {
         PokemonListMobile,
         PokemonList,
-        MovesTable
+        MovesTable,
     },
     data() {
         return {
             searchInput: '',
-            selected: 'pokemon'
+            selected: 'pokemon',
         };
+    },
+    methods: {
+        getFilteredResults(searchTerm) {
+            return (
+                searchTerm
+                    .toLowerCase()
+                    .startsWith(this.searchInput.toLowerCase()) ||
+                searchTerm
+                    .toLowerCase()
+                    .startsWith(
+                        ' ' + this.searchInput.toLowerCase(),
+                        searchTerm.indexOf(' ')
+                    )
+            );
+        },
     },
     computed: {
         ...mapState(['storedPokemonShort', 'storedMoves']),
         searchedPokemon() {
-            return Object.values(this.storedPokemonShort).filter(pokemon => {
-                return (
-                    pokemon.displayName
-                        .toLowerCase()
-                        .startsWith(this.searchInput.toLowerCase()) ||
-                    pokemon.displayName
-                        .toLowerCase()
-                        .startsWith(
-                            ' ' + this.searchInput.toLowerCase(),
-                            pokemon.displayName.indexOf(' ')
-                        )
-                );
-            });
+            return Object.values(this.storedPokemonShort).filter((pokemon) =>
+                this.getFilteredResults(pokemon.displayName)
+            );
         },
         orderedPokemon() {
             return this.searchedPokemon.sort((p1, p2) => {
@@ -88,28 +118,11 @@ export default {
             });
         },
         searchedMoves() {
-            return Object.values(this.storedMoves).filter(move => {
-                let moveName = this.convertName(move.name);
-                return (
-                    moveName
-                        .toLowerCase()
-                        .startsWith(this.searchInput.toLowerCase()) ||
-                    moveName
-                        .toLowerCase()
-                        .startsWith(
-                            ' ' + this.searchInput.toLowerCase(),
-                            moveName.indexOf(' ')
-                        )
-                );
-            });
+            return Object.values(this.storedMoves).filter((move) =>
+                this.getFilteredResults(this.convertName(move.name))
+            );
         },
-        height() {
-            return window.innerHeight;
-        },
-        docHeight() {
-            return document.body.clientHeight;
-        }
-    }
+    },
 };
 </script>
 

@@ -1,8 +1,14 @@
 <template>
     <div class="app">
-        <navbar class="navigation"/>
-        <router-view class="router-view container"/>
-        <back-to-top class="is-hidden-tablet" bottom="40px" right="40px" visibleoffset="500" visibleoffsetbottom="250">
+        <navbar class="navigation" />
+        <router-view class="router-view container" />
+        <back-to-top
+            class="is-hidden-tablet"
+            bottom="40px"
+            right="40px"
+            visibleoffset="500"
+            visibleoffsetbottom="250"
+        >
             <button type="button" class="btn btn-info btn-to-top">
                 <i class="fa fa-chevron-up"></i>
             </button>
@@ -21,50 +27,43 @@ export default {
     components: {
         Navbar,
         Banner,
-        BackToTop
+        BackToTop,
     },
     methods: {
         ...mapActions(['storePokemonShort', 'storeMoves', 'storeTypes']),
-        loadPokemonShort() {
-            let pokemonShort = {};
-            db.collection('pokemonShort')
+        async loadPokemonShort() {
+            const pokemonShort = {};
+
+            const snapshot = await db
+                .collection('pokemonShort')
                 .orderBy('id')
-                .get()
-                .then(snap => {
-                    snap.forEach(doc => {
-                        pokemonShort[doc.data().name] = doc.data();
-                    });
-                    this.storePokemonShort(pokemonShort);
-                });
+                .get();
+            snapshot.forEach((doc) => (pokemonShort[doc.data().name] = doc.data()));
+
+            this.storePokemonShort(pokemonShort);
         },
-        loadMoves() {
-            let moves = {};
-            db.collection('moves')
-                .get()
-                .then(snap => {
-                    snap.forEach(doc => {
-                        moves[doc.data().name] = doc.data();
-                    });
-                    this.storeMoves(moves);
-                });
+        async loadMoves() {
+            const moves = {};
+
+            const snapshot = await db.collection('moves').get();
+            snapshot.forEach((doc) => (moves[doc.data().name] = doc.data()));
+
+            this.storeMoves(moves);
         },
-        loadTypes() {
-            let types = {};
-            db.collection('types')
-                .get()
-                .then(snap => {
-                    snap.forEach(doc => {
-                        types[doc.data().name] = doc.data();
-                    });
-                    this.storeTypes(types);
-                });
-        }
+        async loadTypes() {
+            const types = {};
+
+            const snapshot = await db.collection('types').get();
+            snapshot.forEach((doc) => (types[doc.data().name] = doc.data()));
+
+            this.storeTypes(types);
+        },
     },
     created() {
         this.loadPokemonShort();
         this.loadMoves();
         this.loadTypes();
-    }
+    },
 };
 </script>
 

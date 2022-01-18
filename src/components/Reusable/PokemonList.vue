@@ -1,7 +1,12 @@
 <template>
     <div class="search-results">
         <div class="pokemon-list-container">
-            <pokemon-list-item v-for="(pokemon, index) in pokemonList" :key="index" :pokemon="pokemon" :showLearnLevel="showLearnLevel"/>
+            <pokemon-list-item
+                v-for="(pokemon, index) in pokemonList"
+                :key="index"
+                :pokemon="pokemon"
+                :showLearnLevel="showLearnLevel"
+            />
         </div>
     </div>
 </template>
@@ -13,8 +18,8 @@ export default {
     name: 'PokemonList',
     props: ['pokemonList', 'showLearnLevel'],
     components: {
-        PokemonListItem
-    }
+        PokemonListItem,
+    },
 };
 </script>
 

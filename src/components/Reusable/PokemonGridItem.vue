@@ -1,17 +1,38 @@
 <template>
     <div v-if="pokemon">
-        <div @click="routeTo({ name: pokemon.name, type: 'pokemon' })" class="grid-item">
-            <img :src="require('../../assets/pokemon-large/' + pokemon.sprite)" class="sprite">
+        <div
+            @click="routeTo({ name: pokemon.name, type: 'pokemon' })"
+            class="grid-item"
+        >
+            <img
+                :src="require('../../assets/pokemon-large/' + pokemon.sprite)"
+                class="sprite"
+            />
             <div>
-                <span class="pokemon-id">#{{ pokemon.alternateId || pokemon.id }}</span>
-                <span class="pokemon-name">{{ storedPokemonShort[pokemon.name].displayName }}</span>
-                <br>
-                <span v-for="(type, index) in types" :key="index" :style="{ color: getTypeColor(type) }" class="type-text">
-                    <span v-if="index > 0" class="type-seperator-dot">&#183;</span>
-                    <span class="type-clickable" @click="routeTo({ name: type, type: 'type' })">{{ type.toUpperCase() }}</span>
+                <span class="pokemon-id">
+                    #{{ pokemon.alternateId || pokemon.id }}
+                </span>
+                <span class="pokemon-name">
+                    {{ storedPokemonShort[pokemon.name].displayName }}
+                </span>
+                <br />
+                <span
+                    v-for="(type, index) in types"
+                    :key="index"
+                    :style="{ color: getTypeColor(type) }"
+                    class="type-text"
+                >
+                    <span v-if="index > 0" class="type-seperator-dot"
+                        >&#183;</span
+                    >
+                    <span
+                        class="type-clickable"
+                        @click="routeTo({ name: type, type: 'type' })"
+                        >{{ type.toUpperCase() }}</span
+                    >
                 </span>
                 <span v-if="showLearnLevel" class="learn-level">
-                    <br>
+                    <br />
                     <em>Lvl {{ pokemon.learnLevel }}</em>
                 </span>
             </div>
@@ -32,8 +53,8 @@ export default {
         ...mapState(['storedPokemonShort']),
         types() {
             return this.pokemon.types.all || this.pokemon.types;
-        }
-    }
+        },
+    },
 };
 </script>
 

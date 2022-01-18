@@ -1,17 +1,17 @@
 <template>
     <div>
-        <banner :typeColor="getTypeColor(type)" :otherInfo="type + ' Type'"/>
+        <banner :typeColor="getTypeColor(type)" :otherInfo="type + ' Type'" />
         <div class="main-container">
-            <type-damage :typeName="type" class="type-component"/>
+            <type-damage :typeName="type" class="type-component" />
 
             <div class="tabs is-toggle is-centered type-tabs">
                 <ul>
-                    <li :class="{ 'is-active': selected == 'pokemon'}">
+                    <li :class="{ 'is-active': selected === 'pokemon' }">
                         <a @click="selected = 'pokemon'">
                             <span>Pokémon</span>
                         </a>
                     </li>
-                    <li :class="{ 'is-active': selected == 'moves'}">
+                    <li :class="{ 'is-active': selected === 'moves' }">
                         <a @click="selected = 'moves'">
                             <span>Moves</span>
                         </a>
@@ -19,28 +19,64 @@
                 </ul>
             </div>
 
-            <div v-show="selected == 'pokemon'" class="bottom-margin is-capitalized">
+            <div
+                v-show="selected === 'pokemon'"
+                class="bottom-margin is-capitalized"
+            >
                 <div class="type-component">
-                    <h2 class="header-container" :style="{ background: getTypeColor(type) }">Pure {{ type }} Pokémon</h2>
-                    <pokemon-list :pokemonList="pure" class="is-hidden-mobile is-hidden-tablet-only"/>
-                    <pokemon-list-mobile :pokemonList="pure" class="is-hidden-desktop"/>
+                    <h2
+                        class="header-container"
+                        :style="{ background: getTypeColor(type) }"
+                    >
+                        Pure {{ type }} Pokémon
+                    </h2>
+                    <pokemon-list
+                        :pokemonList="pure"
+                        class="is-hidden-mobile is-hidden-tablet-only"
+                    />
+                    <pokemon-list-mobile
+                        :pokemonList="pure"
+                        class="is-hidden-desktop"
+                    />
                 </div>
 
                 <div class="type-component">
-                    <h2 class="header-container" :style="{ background: getTypeColor(type) }">Primary {{ type }} Pokémon</h2>
-                    <pokemon-list :pokemonList="primary" class="is-hidden-mobile is-hidden-tablet-only"/>
-                    <pokemon-list-mobile :pokemonList="primary" class="is-hidden-desktop"/>
+                    <h2
+                        class="header-container"
+                        :style="{ background: getTypeColor(type) }"
+                    >
+                        Primary {{ type }} Pokémon
+                    </h2>
+                    <pokemon-list
+                        :pokemonList="primary"
+                        class="is-hidden-mobile is-hidden-tablet-only"
+                    />
+                    <pokemon-list-mobile
+                        :pokemonList="primary"
+                        class="is-hidden-desktop"
+                    />
                 </div>
 
                 <div class="type-component">
-                    <h2 class="header-container" :style="{ background: getTypeColor(type) }">Secondary {{ type }} Pokémon</h2>
-                    <pokemon-list :pokemonList="secondary" class="is-hidden-mobile is-hidden-tablet-only"/>
-                    <pokemon-list-mobile :pokemonList="secondary" class="is-hidden-desktop"/>
+                    <h2
+                        class="header-container"
+                        :style="{ background: getTypeColor(type) }"
+                    >
+                        Secondary {{ type }} Pokémon
+                    </h2>
+                    <pokemon-list
+                        :pokemonList="secondary"
+                        class="is-hidden-mobile is-hidden-tablet-only"
+                    />
+                    <pokemon-list-mobile
+                        :pokemonList="secondary"
+                        class="is-hidden-desktop"
+                    />
                 </div>
             </div>
 
-            <div class="bottom-margin" v-show="selected == 'moves'">
-                <moves-table :moves="typeMoves" :showLevel="false"/>
+            <div class="bottom-margin" v-show="selected === 'moves'">
+                <moves-table :moves="typeMoves" :showLevel="false" />
             </div>
         </div>
     </div>
@@ -64,58 +100,54 @@ export default {
         TypeDamage,
         PokemonList,
         PokemonListMobile,
-        MovesTable
+        MovesTable,
     },
     data() {
         return {
             typePokemon: [],
             typeMoves: [],
             selected: 'pokemon',
-            type: this.$route.params.type_name
+            type: this.$route.params.type_name,
         };
     },
     methods: {
         getTypePokemon() {
-            Object.values(this.storedPokemonShort).forEach(pokemon => {
+            Object.values(this.storedPokemonShort).forEach((pokemon) => {
                 if (pokemon.types.all.includes(this.type)) {
                     this.typePokemon.push(pokemon);
                 }
             });
         },
         getTypeMoves() {
-            Object.values(this.storedMoves).forEach(move => {
-                if (move.type == this.type) {
+            Object.values(this.storedMoves).forEach((move) => {
+                if (move.type === this.type) {
                     this.typeMoves.push(move);
                 }
             });
-        }
+        },
     },
     computed: {
         ...mapState(['storedPokemonShort', 'storedMoves']),
         pure() {
-            return this.typePokemon.filter(pokemon => {
+            return this.typePokemon.filter((pokemon) => {
                 const types = pokemon.types.all;
-                if (types.length == 1) {
+                if (types.length === 1) {
                     return pokemon;
                 }
             });
         },
         primary() {
-            return this.typePokemon.filter(pokemon => {
+            return this.typePokemon.filter((pokemon) => {
                 const types = pokemon.types.all;
-                if (types.length == 2 && types[0] == this.type) {
-                    return pokemon;
-                }
+                return types.length === 2 && types[0] === this.type;
             });
         },
         secondary() {
-            return this.typePokemon.filter(pokemon => {
+            return this.typePokemon.filter((pokemon) => {
                 const types = pokemon.types.all;
-                if (types.length == 2 && types[1] == this.type) {
-                    return pokemon;
-                }
+                return types.length === 2 && types[1] === this.type;
             });
-        }
+        },
     },
     created() {
         this.getTypePokemon();
@@ -128,8 +160,8 @@ export default {
             this.typeMoves = [];
             this.getTypePokemon();
             this.getTypeMoves();
-        }
-    }
+        },
+    },
 };
 </script>
 

@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 const vuexLocalStorage = new VuexPersist({
     key: 'vuex',
-    storage: window.localStorage
+    storage: window.localStorage,
 });
 
 export default new Vuex.Store({
@@ -17,8 +17,7 @@ export default new Vuex.Store({
         storedMoves: {},
         storedPokemon: {},
         storedMovePokemon: {},
-        storedAbilities: {},
-        storedTypes: {}
+        storedTypes: {},
     },
     mutations: {
         storePokemonShort: (state, payload) => {
@@ -31,18 +30,14 @@ export default new Vuex.Store({
             state.storedPokemon[payload.info.name] = payload;
         },
         addMovePokemonToStore: (state, payload) => {
-            const moves = Object.assign({}, state.storedMovePokemon[payload.name], payload.data);
-            state.storedMovePokemon[payload.name] = moves;
+            state.storedMovePokemon[payload.name] = payload.data;
             if (Object.keys(state.storedMovePokemon).length > 10) {
                 state.storedMovePokemon = {};
             }
         },
-        storeAbility: (state, payload) => {
-            state.storedAbilities[payload.name] = payload.effect;
-        },
         storeTypes: (state, payload) => {
             state.storedTypes = payload;
-        }
+        },
     },
     actions: {
         storePokemonShort: (context, payload) => {
@@ -57,11 +52,8 @@ export default new Vuex.Store({
         addMovePokemonToStore: (context, payload) => {
             context.commit('addMovePokemonToStore', payload);
         },
-        storeAbility: (context, payload) => {
-            context.commit('storeAbility', payload);
-        },
         storeTypes: (context, payload) => {
             context.commit('storeTypes', payload);
-        }
-    }
+        },
+    },
 });

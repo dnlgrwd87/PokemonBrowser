@@ -10,23 +10,46 @@
                     <td class="power has-text-centered">Power</td>
                     <td class="accuracy has-text-centered">Acc.</td>
                     <td class="pp is-hidden-mobile has-text-centered">PP</td>
-                    <td class="effect is-hidden-mobile is-hidden-tablet-only">Effect</td>
+                    <td class="effect is-hidden-mobile is-hidden-tablet-only">
+                        Effect
+                    </td>
                 </tr>
 
                 <tr v-for="move in moves" :key="move.id">
-                    <td class="lvl" v-if="showLevel && move.learnLevel > 1">{{ move.learnLevel }}</td>
-                    <td class="lvl" v-if="showLevel && move.learnLevel <= 1">&#8212;</td>
-                    <td @click="routeTo({ name: move.name ,type: 'move' })" class="name">{{ convertName(move.name) }}</td>
-                    <td class="has-text-centered">
-                        <type-box :type="move.type"/>
+                    <td class="lvl" v-if="showLevel && move.learnLevel > 1">
+                        {{ move.learnLevel }}
                     </td>
-                    <td class="category has-text-centered">{{ convertName(move.category) }}</td>
-                    <td class="power has-text-centered" v-if="move.power">{{ move.power }}</td>
+                    <td class="lvl" v-if="showLevel && move.learnLevel <= 1">
+                        &#8212;
+                    </td>
+                    <td
+                        @click="routeTo({ name: move.name, type: 'move' })"
+                        class="name"
+                    >
+                        {{ convertName(move.name) }}
+                    </td>
+                    <td class="has-text-centered">
+                        <type-box :type="move.type" />
+                    </td>
+                    <td class="category has-text-centered">
+                        {{ convertName(move.category) }}
+                    </td>
+                    <td class="power has-text-centered" v-if="move.power">
+                        {{ move.power }}
+                    </td>
                     <td class="power has-text-centered" v-else>&#8212;</td>
-                    <td class="accuracy has-text-centered" v-if="move.accuracy">{{ move.accuracy }}</td>
+                    <td class="accuracy has-text-centered" v-if="move.accuracy">
+                        {{ move.accuracy }}
+                    </td>
                     <td class="accuracy has-text-centered" v-else>&#8212;</td>
-                    <td class="pp is-hidden-mobile has-text-centered">{{ move.pp }}</td>
-                    <td class="effect is-hidden-mobile is-hidden-tablet-only">{{ move.shortEffectInfo.replace("$effect_chance", "10") }}</td>
+                    <td class="pp is-hidden-mobile has-text-centered">
+                        {{ move.pp }}
+                    </td>
+                    <td class="effect is-hidden-mobile is-hidden-tablet-only">
+                        {{
+                            move.shortEffectInfo.replace('$effect_chance', '10')
+                        }}
+                    </td>
                 </tr>
             </table>
         </div>
@@ -43,8 +66,8 @@ export default {
     mixins: [routeTo, convertName],
     props: ['moves', 'showLevel'],
     components: {
-        TypeBox
-    }
+        TypeBox,
+    },
 };
 </script>
 

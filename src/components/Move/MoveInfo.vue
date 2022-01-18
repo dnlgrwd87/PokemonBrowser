@@ -19,7 +19,7 @@
                 </td>
                 <td>
                     <span class="type">
-                        <type-box :type="move.type"/>
+                        <type-box :type="move.type" />
                     </span>
                 </td>
             </tr>
@@ -60,8 +60,8 @@ export default {
     mixins: [convertName],
     props: ['move'],
     components: {
-        TypeBox
-    }
+        TypeBox,
+    },
 };
 </script>
 

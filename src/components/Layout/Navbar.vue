@@ -4,10 +4,16 @@
             <div class="container">
                 <div class="navbar-brand">
                     <router-link to="/" class="navbar-item">
-                        <img :src="require('../../assets/pokeball.png')">
+                        <img :src="require('../../assets/pokeball.png')" />
                         <p class="brand-text is-info">Pokémon Browser</p>
                     </router-link>
-                    <a v-if="$route.name != 'home'" role="button" class="navbar-burger" @click="isActive = !isActive" :class="{ 'is-active': isActive }">
+                    <a
+                        v-if="$route.name != 'home'"
+                        role="button"
+                        class="navbar-burger"
+                        @click="isActive = !isActive"
+                        :class="{ 'is-active': isActive }"
+                    >
                         <div v-show="!isActive">
                             <i class="fa fa-search"></i>
                         </div>
@@ -17,21 +23,50 @@
                     </a>
                 </div>
 
-                <div class="navbar-menu has-background-dark" :class="{ 'is-active': isActive }">
+                <div
+                    class="navbar-menu has-background-dark"
+                    :class="{ 'is-active': isActive }"
+                >
                     <div class="navbar-end">
                         <div class="search-bar navbar-item">
                             <ul>
-                                <div v-if="$route.name != 'home'" class="control has-icons-left">
-                                    <input @focus="hasFocus = true" @blur="hasFocus = false" class="input is-small search-input" :value="searchInput" @input="searchInput = $event.target.value">
+                                <div
+                                    v-if="$route.name != 'home'"
+                                    class="control has-icons-left"
+                                >
+                                    <input
+                                        @focus="hasFocus = true"
+                                        @blur="hasFocus = false"
+                                        class="input is-small search-input"
+                                        :value="searchInput"
+                                        @input="
+                                            searchInput = $event.target.value
+                                        "
+                                    />
                                     <span class="icon is-left">
                                         <i class="fas fa-search"></i>
                                     </span>
                                 </div>
-                                <div v-if="hasFocus && searchInput.length" class="search-results">
-                                    <li v-for="result in allSearchResults" :key="result.name" @mousedown="goTo(result)">
+                                <div
+                                    v-if="hasFocus && searchInput.length"
+                                    class="search-results"
+                                >
+                                    <li
+                                        v-for="result in allSearchResults"
+                                        :key="result.name"
+                                        @mousedown="goTo(result)"
+                                    >
                                         {{ displayName(result) }}
-                                        <span v-if="result.type == 'pokemon'" class="is-pulled-right is-size-7">Pokémon</span>
-                                        <span v-if="result.type == 'move'" class="is-pulled-right is-size-7">Move</span>
+                                        <span
+                                            v-if="result.type === 'pokemon'"
+                                            class="is-pulled-right is-size-7"
+                                            >Pokémon</span
+                                        >
+                                        <span
+                                            v-if="result.type === 'move'"
+                                            class="is-pulled-right is-size-7"
+                                            >Move</span
+                                        >
                                     </li>
                                 </div>
                             </ul>
@@ -57,7 +92,7 @@ export default {
             searchInput: '',
             searchResults: [],
             hasFocus: false,
-            searchbarActive: false
+            searchbarActive: false,
         };
     },
     methods: {
@@ -66,34 +101,34 @@ export default {
             this.isActive = false;
             this.routeTo(result);
         },
-        clearStorage() {
-            localStorage.clear();
-        },
         displayName(result) {
-            if (result.type == 'pokemon') {
+            if (result.type === 'pokemon') {
                 return this.storedPokemonShort[result.name].displayName;
-            } else {
-                return this.convertName(result.name);
             }
-        }
+
+            return this.convertName(result.name);
+        },
+        getFilteredResults(searchTerm) {
+            return (
+                searchTerm
+                    .toLowerCase()
+                    .startsWith(this.searchInput.toLowerCase()) ||
+                searchTerm
+                    .toLowerCase()
+                    .startsWith(
+                        ' ' + this.searchInput.toLowerCase(),
+                        searchTerm.indexOf(' ')
+                    )
+            );
+        },
     },
     computed: {
         ...mapState(['storedPokemonShort', 'storedMoves']),
         searchedPokemon() {
             return Object.values(this.storedPokemonShort)
-                .filter(pokemon => {
-                    return (
-                        pokemon.displayName
-                            .toLowerCase()
-                            .startsWith(this.searchInput.toLowerCase()) ||
-                        pokemon.displayName
-                            .toLowerCase()
-                            .startsWith(
-                                ' ' + this.searchInput.toLowerCase(),
-                                pokemon.displayName.indexOf(' ')
-                            )
-                    );
-                })
+                .filter((pokemon) =>
+                    this.getFilteredResults(pokemon.displayName)
+                )
                 .sort((p1, p2) => {
                     return (
                         (p1.alternateId || p1.id) - (p2.alternateId || p2.id)
@@ -101,45 +136,34 @@ export default {
                 });
         },
         searchedMoves() {
-            return Object.values(this.storedMoves).filter(move => {
-                let moveName = this.convertName(move.name);
-                if (this.searchInput.length) {
-                    return (
-                        moveName
-                            .toLowerCase()
-                            .startsWith(this.searchInput.toLowerCase()) ||
-                        moveName
-                            .toLowerCase()
-                            .startsWith(
-                                ' ' + this.searchInput.toLowerCase(),
-                                moveName.indexOf(' ')
-                            )
-                    );
-                }
-            });
+            return Object.values(this.storedMoves).filter((move) =>
+                this.getFilteredResults(this.convertName(move.name))
+            );
         },
         allSearchResults() {
-            let pokemon = this.searchedPokemon;
-            let moves = this.searchedMoves;
-            let allResults = [];
-            pokemon.forEach(poke => {
-                if (allResults.length <= 12) {
+            const allResults = [];
+            const maxResultLength = 15;
+
+            this.searchedPokemon.forEach((poke) => {
+                if (allResults.length < maxResultLength) {
                     allResults.push({ name: poke.name, type: 'pokemon' });
                 }
             });
-            moves.forEach(move => {
-                if (allResults.length <= 12) {
+
+            this.searchedMoves.forEach((move) => {
+                if (allResults.length < maxResultLength) {
                     allResults.push({ name: move.name, type: 'move' });
                 }
             });
+
             return allResults;
-        }
+        },
     },
     watch: {
         '$route.params'() {
             this.searchInput = '';
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -259,5 +283,3 @@ a.navbar-item:hover {
     }
 }
 </style>
-
-

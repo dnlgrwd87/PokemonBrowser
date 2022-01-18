@@ -12,8 +12,12 @@
             <tr>
                 <td>Type</td>
                 <td>
-                    <span v-for="(type, index) in info.types" :key="index" class="type">
-                        <type-box :type="type"/>
+                    <span
+                        v-for="(type, index) in info.types"
+                        :key="index"
+                        class="type"
+                    >
+                        <type-box :type="type" />
                     </span>
                 </td>
             </tr>
@@ -32,8 +36,20 @@
             <tr>
                 <td>Abilities</td>
                 <td>
-                    <li v-for="ability in info.abilities.normal" :key="ability" @click="routeTo({ name: ability.replace(' ', '-'), type: 'ability' })" class="abilities">{{ ability }}</li>
-                    <li v-for="ability in info.abilities.hidden" :key="ability" @click="routeTo({ name: ability.replace(' ', '-'), type: 'ability' })" class="abilities">
+                    <li
+                        v-for="ability in info.abilities.normal"
+                        :key="ability"
+                        @click="routeToAbility(ability)"
+                        class="abilities"
+                    >
+                        {{ ability }}
+                    </li>
+                    <li
+                        v-for="ability in info.abilities.hidden"
+                        :key="ability"
+                        @click="routeToAbility(ability)"
+                        class="abilities"
+                    >
                         {{ ability }}
                         <span class="has-text-grey">(hidden)</span>
                     </li>
@@ -52,8 +68,16 @@ export default {
     props: ['info'],
     mixins: [routeTo],
     components: {
-        TypeBox
-    }
+        TypeBox,
+    },
+    methods: {
+        routeToAbility(ability) {
+            this.routeTo({
+                name: ability.replace(' ', '-'),
+                type: 'ability',
+            });
+        },
+    },
 };
 </script>
 

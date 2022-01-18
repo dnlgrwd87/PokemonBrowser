@@ -1,10 +1,35 @@
 <template>
     <div>
-        <div class="evolution-container columns is-centered is-vcentered" :class="{ 'is-hidden-mobile': allStages.length == 2 }">
-            <div v-for="(stage, index) in allStages" :key="index" class="column stage-column has-text-centered">
-                <div v-for="(evo, evoIndex) in stage" :key="evo.name" class="current-evo columns is-inline-block is-centered is-vcentered" :class="{ 'is-marginless': index == allStages.length - 1 }">
-                    <pokemon-grid-item :pokemon="storedPokemonShort[evo.name]" class="grid-item has-text-centered column" :class="{ 'is-marginless': index == allStages.length - 1 }"/>
-                    <evolution-arrows :chainLength="allStages.length" :mobile="true" :evo="evo" :stage="stage " :evoIndex="evoIndex " class="evo-arrows has-text-centered"/>
+        <div
+            class="evolution-container columns is-centered is-vcentered"
+            :class="{ 'is-hidden-mobile': allStages.length === 2 }"
+        >
+            <div
+                v-for="(stage, index) in allStages"
+                :key="index"
+                class="column stage-column has-text-centered"
+            >
+                <div
+                    v-for="(evo, evoIndex) in stage"
+                    :key="evo.name"
+                    class="current-evo columns is-inline-block is-centered is-vcentered"
+                    :class="{ 'is-marginless': index === allStages.length - 1 }"
+                >
+                    <pokemon-grid-item
+                        :pokemon="storedPokemonShort[evo.name]"
+                        class="grid-item has-text-centered column"
+                        :class="{
+                            'is-marginless': index === allStages.length - 1,
+                        }"
+                    />
+                    <evolution-arrows
+                        :chainLength="allStages.length"
+                        :mobile="true"
+                        :evo="evo"
+                        :stage="stage"
+                        :evoIndex="evoIndex"
+                        class="evo-arrows has-text-centered"
+                    />
                 </div>
             </div>
         </div>
@@ -21,11 +46,11 @@ export default {
     props: ['allStages'],
     components: {
         PokemonGridItem,
-        EvolutionArrows
+        EvolutionArrows,
     },
     computed: {
-        ...mapState(['storedPokemonShort'])
-    }
+        ...mapState(['storedPokemonShort']),
+    },
 };
 </script>
 

@@ -6,23 +6,41 @@
                 <p v-if="typeData.doubleDamageTo.length">
                     <span class="is-capitalized">
                         <em>{{ typeName }}</em>
-                    </span> moves are super-effective against:
+                    </span>
+                    moves are super-effective against:
                 </p>
-                <type-box v-for="type in typeData.doubleDamageTo" :key="type.name" :type="type" class="type-box"/>
+                <type-box
+                    v-for="type in typeData.doubleDamageTo"
+                    :key="type.name"
+                    :type="type"
+                    class="type-box"
+                />
 
                 <p v-if="typeData.halfDamageTo">
                     <span class="is-capitalized">
                         <em>{{ typeName }}</em>
-                    </span> moves are not very effect against:
+                    </span>
+                    moves are not very effect against:
                 </p>
-                <type-box v-for="type in typeData.halfDamageTo" :key="type.name" :type="type" class="type-box"/>
+                <type-box
+                    v-for="type in typeData.halfDamageTo"
+                    :key="type.name"
+                    :type="type"
+                    class="type-box"
+                />
 
                 <p v-if="typeData.noDamageTo.length">
                     <span class="is-capitalized">
                         <em>{{ typeName }}</em>
-                    </span> moves have no effect on:
+                    </span>
+                    moves have no effect on:
                 </p>
-                <type-box v-for="type in typeData.noDamageTo" :key="type.name" :type="type" class="type-box"/>
+                <type-box
+                    v-for="type in typeData.noDamageTo"
+                    :key="type.name"
+                    :type="type"
+                    class="type-box"
+                />
             </div>
 
             <div class="column defense-info">
@@ -30,23 +48,41 @@
                 <p v-if="typeData.doubleDamageFrom.length">
                     <span class="is-capitalized">
                         <em>{{ typeName }}</em>
-                    </span> types are weak against:
+                    </span>
+                    types are weak against:
                 </p>
-                <type-box v-for="type in typeData.doubleDamageFrom" :key="type.name" :type="type" class="type-box"/>
+                <type-box
+                    v-for="type in typeData.doubleDamageFrom"
+                    :key="type.name"
+                    :type="type"
+                    class="type-box"
+                />
 
                 <p v-if="typeData.halfDamageFrom.length">
                     <span class="is-capitalized">
                         <em>{{ typeName }}</em>
-                    </span> types are resistant to:
+                    </span>
+                    types are resistant to:
                 </p>
-                <type-box v-for="type in typeData.halfDamageFrom" :key="type.name" :type="type" class="type-box"/>
+                <type-box
+                    v-for="type in typeData.halfDamageFrom"
+                    :key="type.name"
+                    :type="type"
+                    class="type-box"
+                />
 
                 <p v-if="typeData.noDamageFrom.length">
                     <span class="is-capitalized">
                         <em>{{ typeName }}</em>
-                    </span> types are immune to:
+                    </span>
+                    types are immune to:
                 </p>
-                <type-box v-for="type in typeData.noDamageFrom" :key="type.name" :type="type" class="type-box"/>
+                <type-box
+                    v-for="type in typeData.noDamageFrom"
+                    :key="type.name"
+                    :type="type"
+                    class="type-box"
+                />
             </div>
         </div>
     </div>
@@ -60,20 +96,20 @@ export default {
     name: 'TypeDamage',
     props: ['typeName'],
     components: {
-        TypeBox
+        TypeBox,
     },
     data() {
         return {
-            typeData: null
+            typeData: null,
         };
     },
     methods: {
         loadTypeData() {
             this.typeData = this.storedTypes[this.typeName];
-        }
+        },
     },
     computed: {
-        ...mapState(['storedTypes'])
+        ...mapState(['storedTypes']),
     },
     created() {
         this.loadTypeData();
@@ -81,8 +117,8 @@ export default {
     watch: {
         '$route.params.type_name'() {
             this.loadTypeData();
-        }
-    }
+        },
+    },
 };
 </script>
 

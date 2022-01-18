@@ -8,7 +8,11 @@
                     <p>Egg Groups</p>
                 </td>
                 <td>
-                    <span v-for="(group, index) in Object.keys(info.eggGroups)" :key="index" class="is-capitalized">
+                    <span
+                        v-for="(group, index) in Object.keys(info.eggGroups)"
+                        :key="index"
+                        class="is-capitalized"
+                    >
                         <span v-if="index > 0">,</span>
                         {{ group }}
                     </span>
@@ -26,7 +30,9 @@
                 <td>Egg cycles</td>
                 <td>
                     {{ info.eggCycles }}
-                    <span class="has-text-grey">({{ (info.eggCycles * 256).toLocaleString() }} steps)</span>
+                    <span class="has-text-grey"
+                        >({{ calculatedEggCycles }} steps)</span
+                    >
                 </td>
             </tr>
         </table>
@@ -36,7 +42,12 @@
 <script>
 export default {
     name: 'PokemonBreeding',
-    props: ['info']
+    props: ['info'],
+    computed: {
+        calculatedEggCycles() {
+            return (this.info.eggCycles * 256).toLocaleString();
+        },
+    },
 };
 </script>
 

@@ -3,12 +3,23 @@
         <section class="hero" :style="{ background: typeColor }">
             <div class="hero-body has-text-centered">
                 <div v-if="info">
-                    <h1 v-if="info.alternateForms" class="title has-text-white">{{ convertName(info.name, true) }}</h1>
-                    <h1 v-if="!info.alternateForms" class="title has-text-white">{{ convertName(info.name) }}</h1>
-                    <h2 class="subtitle has-text-white">#{{ info.alternateId || info.id }}</h2>
+                    <h1 v-if="info.alternateForms" class="title has-text-white">
+                        {{ convertName(info.name, true) }}
+                    </h1>
+                    <h1
+                        v-if="!info.alternateForms"
+                        class="title has-text-white"
+                    >
+                        {{ convertName(info.name) }}
+                    </h1>
+                    <h2 class="subtitle has-text-white">
+                        #{{ info.alternateId || info.id }}
+                    </h2>
                 </div>
                 <div v-if="otherInfo">
-                    <h1 class="title has-text-white">{{ convertName(otherInfo) }}</h1>
+                    <h1 class="title has-text-white">
+                        {{ convertName(otherInfo) }}
+                    </h1>
                 </div>
             </div>
         </section>
@@ -21,7 +32,7 @@ import convertName from '@/mixins/convertName';
 export default {
     name: 'Banner',
     props: ['typeColor', 'info', 'otherInfo'],
-    mixins: [convertName]
+    mixins: [convertName],
 };
 </script>
 

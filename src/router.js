@@ -16,19 +16,19 @@ export default new Router({
         if (!to.hash) {
             return {
                 x: 0,
-                y: 0
+                y: 0,
             };
         }
     },
     routes: [
         {
             path: '*',
-            redirect: '/'
+            redirect: '/',
         },
         {
             path: '/',
             name: 'home',
-            component: Home
+            component: Home,
         },
         {
             path: '/pokemon/:pokemon_name',
@@ -40,7 +40,7 @@ export default new Router({
                 } else {
                     next();
                 }
-            }
+            },
         },
         {
             path: '/move/:move_name',
@@ -52,7 +52,7 @@ export default new Router({
                 } else {
                     next();
                 }
-            }
+            },
         },
         {
             path: '/type/:type_name',
@@ -64,12 +64,12 @@ export default new Router({
                 } else {
                     next();
                 }
-            }
+            },
         },
         {
             path: '/ability/:ability_name',
             name: 'pokemon-ability',
-            component: Ability
-        }
-    ]
+            component: Ability,
+        },
+    ],
 });

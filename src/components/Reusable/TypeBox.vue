@@ -1,5 +1,9 @@
 <template>
-    <div @click="routeTo({ name: type ,type: 'type' })" class="type has-text-centered" :style="{ background: getTypeColor(type)}">
+    <div
+        @click="routeTo({ name: type, type: 'type' })"
+        class="type has-text-centered"
+        :style="{ background: getTypeColor(type) }"
+    >
         <span>{{ type.toUpperCase() }}</span>
     </div>
 </template>
@@ -11,7 +15,7 @@ import routeTo from '@/mixins/routeTo';
 export default {
     name: 'TypeBox',
     props: ['type'],
-    mixins: [typeColors, routeTo]
+    mixins: [typeColors, routeTo],
 };
 </script>
 
