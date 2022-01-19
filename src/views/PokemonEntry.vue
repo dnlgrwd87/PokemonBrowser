@@ -12,27 +12,7 @@
                 :next="pokemon.next"
             />
 
-            <div v-if="pokemon.previous">
-                <img
-                    v-show="false"
-                    :src="
-                        require('../assets/pokemon-large/' +
-                            pokemon.previous.sprite)
-                    "
-                />
-            </div>
-
-            <div v-if="pokemon.next">
-                <img
-                    v-show="false"
-                    :src="
-                        require('../assets/pokemon-large/' +
-                            pokemon.next.sprite)
-                    "
-                />
-            </div>
-
-            <div v-if="true" class="main-sprite">
+            <div class="main-sprite">
                 <img
                     :src="
                         require('../assets/pokemon-large/' +
@@ -153,90 +133,98 @@ export default {
                 previous: null,
                 next: null,
             },
+            snapshot: null,
         };
     },
     methods: {
         ...mapActions(['addPokemonToStore']),
         loadPokemon() {
             const name = this.$route.params.pokemon_name;
-            if (!this.storedPokemon[name]) {
+            const storedPokemon = this.storedPokemon[name];
+
+            if (!storedPokemon) {
+                this.resetSnapshot();
                 this.fetchPokemon();
             } else {
-                this.pokemon = this.storedPokemon[name];
+                this.pokemon = storedPokemon;
             }
         },
-        fetchPokemon() {
-            const name = this.$route.params.pokemon_name;
-            const baseInfo = this.storedPokemonShort[name];
-            const id = baseInfo.id;
-            const altId = baseInfo.alternateId || baseInfo.id;
-            const evoId = baseInfo.evolutionId || 0;
+        async fetchPokemon() {
+            await Promise.all([
+                this.getDbPokemon(),
+                this.getDbMoves(),
+                this.getDbEvolutions(),
+                this.getDbForms(),
+            ]);
 
-            let previousName = baseInfo.previous;
-            let nextName = baseInfo.next;
+            this.pokemon = this.snapshot;
 
-            // Temp is stored to store the current pokemon
-            // This way, when the page transitions there is no flicker
-            const temp = {
+            if (!this.pokemon.info.alternateForms) {
+                this.pokemon.forms = [];
+            }
+
+            const { previous, next } = this.pokemonShort;
+            this.pokemon.previous = this.storedPokemonShort[previous];
+            this.pokemon.next = this.storedPokemonShort[next];
+
+            this.addPokemonToStore(this.snapshot);
+        },
+        async getDbPokemon() {
+            const dbPokemon = await db
+                .collection('pokemon')
+                .doc(this.pokemonShort.id.toString())
+                .get();
+
+            this.snapshot.info = dbPokemon.data();
+        },
+        async getDbMoves() {
+            const dbMoves = await db
+                .collection('pokemonMoves')
+                .doc(this.pokemonShort.id.toString())
+                .get();
+
+            this.snapshot.moves = Object.values(dbMoves.data());
+        },
+        async getDbEvolutions() {
+            if (!this.pokemonShort.evolutionId) return;
+
+            const dbEvolutions = await db
+                .collection('evolutions')
+                .doc(this.pokemonShort.evolutionId.toString())
+                .get();
+
+            const evos = [];
+            const evoValues = Object.values(dbEvolutions.data());
+
+            evoValues.forEach((value) => {
+                if (value.stage === 1) {
+                    evos.unshift(value);
+                } else {
+                    evos.push(value);
+                }
+
+                this.snapshot.evolutions = evos;
+            });
+        },
+        async getDbForms() {
+            if (!this.pokemonShort.alternateForms) return;
+
+            const id = this.pokemonShort.alternateId || this.pokemonShort.id;
+
+            const dbForms = await db
+                .collection('alternateForms')
+                .doc(id.toString())
+                .get();
+
+            this.snapshot.forms = Object.values(dbForms.data());
+        },
+        resetSnapshot() {
+            this.snapshot = {
                 info: null,
                 moves: [],
                 evolutions: [],
                 forms: [],
-                previous: this.storedPokemonShort[previousName],
-                next: this.storedPokemonShort[nextName],
             };
-
-            db.collection('pokemon')
-                .doc(id.toString())
-                .get()
-                .then((doc) => {
-                    this.pokemon.info = doc.data();
-                    temp.info = doc.data();
-                    if (!this.pokemon.info.alternateForms) {
-                        this.pokemon.forms = [];
-                    }
-                    this.pokemon.previous =
-                        this.storedPokemonShort[previousName];
-                    this.pokemon.next = this.storedPokemonShort[nextName];
-                    db.collection('pokemonMoves')
-                        .doc(id.toString())
-                        .get()
-                        .then((doc) => {
-                            this.pokemon.moves = Object.values(doc.data());
-                            temp.moves = Object.values(doc.data());
-                            this.addPokemonToStore(temp);
-                        });
-                    db.collection('evolutions')
-                        .doc(evoId.toString())
-                        .get()
-                        .then((doc) => {
-                            if (doc.exists) {
-                                const evos = [];
-                                const values = Object.values(doc.data());
-                                values.forEach((value) => {
-                                    if (value.stage == 1) {
-                                        evos.unshift(value);
-                                    } else {
-                                        evos.push(value);
-                                    }
-                                    this.pokemon.evolutions = evos;
-                                    temp.evolutions = evos;
-                                });
-                            }
-                            this.addPokemonToStore(temp);
-                        });
-                });
-
-            if (baseInfo.alternateForms) {
-                db.collection('alternateForms')
-                    .doc(altId.toString())
-                    .get()
-                    .then((doc) => {
-                        this.pokemon.forms = Object.values(doc.data());
-                        temp.forms = Object.values(doc.data());
-                        this.addPokemonToStore(temp);
-                    });
-            }
         },
     },
     created() {
@@ -248,6 +236,10 @@ export default {
             if (this.pokemon.info.types) {
                 return this.getTypeColor(this.pokemon.info.types[0]);
             }
+        },
+        pokemonShort() {
+            const name = this.$route.params.pokemon_name;
+            return this.storedPokemonShort[name];
         },
     },
     watch: {
