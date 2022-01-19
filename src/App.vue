@@ -32,31 +32,53 @@ export default {
     methods: {
         ...mapActions(['storePokemonShort', 'storeMoves', 'storeTypes']),
         async loadPokemonShort() {
-            const pokemonShort = {};
+            let pokemonShort = this.getFromPersistedVuex('storedPokemonShort');
 
-            const snapshot = await db
-                .collection('pokemonShort')
-                .orderBy('id')
-                .get();
-            snapshot.forEach((doc) => (pokemonShort[doc.data().name] = doc.data()));
+            if (!pokemonShort) {
+                pokemonShort = {};
+                const snapshot = await db
+                    .collection('pokemonShort')
+                    .orderBy('id')
+                    .get();
+                snapshot.forEach(
+                    (doc) => (pokemonShort[doc.data().name] = doc.data())
+                );
+            }
 
             this.storePokemonShort(pokemonShort);
         },
         async loadMoves() {
-            const moves = {};
+            let moves = this.getFromPersistedVuex('storedMoves');
 
-            const snapshot = await db.collection('moves').get();
-            snapshot.forEach((doc) => (moves[doc.data().name] = doc.data()));
+            if (!moves) {
+                moves = {};
+
+                const snapshot = await db.collection('moves').get();
+                snapshot.forEach(
+                    (doc) => (moves[doc.data().name] = doc.data())
+                );
+            }
 
             this.storeMoves(moves);
         },
         async loadTypes() {
-            const types = {};
+            let types = this.getFromPersistedVuex('storedTypes');
 
-            const snapshot = await db.collection('types').get();
-            snapshot.forEach((doc) => (types[doc.data().name] = doc.data()));
+            if (!types) {
+                types = {};
+
+                const snapshot = await db.collection('types').get();
+                snapshot.forEach(
+                    (doc) => (types[doc.data().name] = doc.data())
+                );
+            }
 
             this.storeTypes(types);
+        },
+        getFromPersistedVuex(itemKey) {
+            const vuexStorageJson = localStorage.getItem('vuex');
+            const parsedStorage = JSON.parse(vuexStorageJson);
+            return parsedStorage ? parsedStorage[itemKey] : null;
         },
     },
     created() {
